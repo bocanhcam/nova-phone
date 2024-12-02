@@ -8,7 +8,7 @@ A custom Laravel Nova field to handle phone numbers. This field automatically fo
 
 Install the package via Composer:
 ```shell
-composer require bocanhcam/phone
+composer require bocanhcam/nova-phone
 ```
 
 ## Usage
