@@ -2,6 +2,8 @@
 
 A custom Laravel Nova field to handle phone numbers. This field automatically formats phone numbers as the user types, supports country-based formatting, and allows international formatting.
 
+![US national phone](/screenshots/us.gif)
+
 ## Installation
 
 Install the package via Composer:
