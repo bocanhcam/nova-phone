@@ -1,30 +1,30 @@
 <template>
   <DefaultField
-    :field="currentField"
-    :errors="errors"
-    :show-help-text="showHelpText"
-    :full-width-content="fullWidthContent"
+      :field="currentField"
+      :errors="errors"
+      :show-help-text="showHelpText"
+      :full-width-content="fullWidthContent"
   >
     <template #field>
       <input
-        :id="currentField.uniqueKey"
-        type="text"
-        class="w-full form-control form-input form-control-bordered"
-        :class="errorClasses"
-        :placeholder="currentField.placeholder"
-        v-model="value"
-        @input="format"
+          :id="currentField.uniqueKey"
+          type="text"
+          class="w-full form-control form-input form-control-bordered"
+          :class="errorClasses"
+          :placeholder="currentField.placeholder"
+          v-model="value"
+          @input="format"
       />
     </template>
   </DefaultField>
 </template>
 
 <script>
-import { DependentFormField, HandlesValidationErrors } from 'laravel-nova'
+import {DependentFormField, HandlesValidationErrors} from 'laravel-nova'
 import {AsYouType, parsePhoneNumber} from "libphonenumber-js/max";
 
 export default {
-    mixins: [DependentFormField, HandlesValidationErrors],
+  mixins: [DependentFormField, HandlesValidationErrors],
 
   props: ['resourceName', 'resourceId', 'field'],
 
@@ -44,14 +44,17 @@ export default {
     },
 
     format(e) {
-        const phone = new AsYouType(this.currentField.country);
-        this.value = phone.input(e.target.value);
+      const phone = new AsYouType(this.currentField.country);
+      this.value = phone.input(e.target.value);
 
-        if (phone.isValid()) {
-            const phoneParse = parsePhoneNumber(this.value, this.currentField.country)
+      if (phone.isValid()) {
+        const phoneParse = parsePhoneNumber(this.value, this.currentField.country)
 
-            this.value = this.currentField.international ? phoneParse.formatInternational() : phoneParse.formatNational();
-        }
+        this.value = this.currentField.international ? phoneParse.formatInternational() : phoneParse.formatNational();
+      }
+
+      this.emitFieldValueChange(this.fieldAttribute, this.value)
+      this.$emit('field-changed')
     }
   },
 }
